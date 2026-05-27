@@ -694,7 +694,6 @@ GameObject:
   - component: {fileID: 433647551}
   - component: {fileID: 433647550}
   - component: {fileID: 433647549}
-  - component: {fileID: 433647553}
   - component: {fileID: 433647552}
   - component: {fileID: 433647554}
   m_Layer: 0
@@ -822,21 +821,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!114 &433647553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433647548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cb0309fcfd4d4844982114982bb6321, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ControlCamara
-  player: {fileID: 980752222}
-  offset: {x: 0, y: 2, z: -10}
-  suavizado: 5
 --- !u!114 &433647554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2531,6 +2515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   speed: 5
+  jumpForce: 7
 --- !u!65 &980752219
 BoxCollider:
   m_ObjectHideFlags: 0
