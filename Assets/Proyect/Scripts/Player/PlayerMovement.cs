@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movimiento")]
     public float speed = 5f;
     public float jumpForce = 7f;
 
@@ -10,36 +11,37 @@ public class PlayerMovement : MonoBehaviour
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
-    [Header("Salto")]
-    public float fallMultiplier = 2.5f;
-    public float lowJumpMultiplier = 2f;
-
     private Rigidbody rb;
+    private Animator animator;
     private PlayerControls controls;
+
     private Vector2 moveInput;
     private bool isGrounded;
 
-    void Awake()
+    private void Awake()
     {
         controls = new PlayerControls();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         controls.Enable();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         controls.Disable();
     }
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+
+        Debug.Log("Animator encontrado en: " + animator.gameObject.name);
     }
 
-    void Update()
+    private void Update()
     {
         moveInput = controls.Player.Move.ReadValue<Vector2>();
 
@@ -48,7 +50,23 @@ public class PlayerMovement : MonoBehaviour
             groundCheckRadius,
             groundLayer
         );
+        Debug.Log("Grounded: " + isGrounded);
 
+        // Animaciones
+        animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
+        animator.SetBool("IsJumping", !isGrounded);
+
+        // Girar personaje
+        if (moveInput.x > 0.1f)
+        {
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+        else if (moveInput.x < -0.1f)
+        {
+            transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
+
+        // Salto
         if (controls.Player.Jump.WasPressedThisFrame() && isGrounded)
         {
             rb.linearVelocity = new Vector3(
@@ -59,37 +77,27 @@ public class PlayerMovement : MonoBehaviour
 
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+        Debug.Log("MoveInput: " + moveInput.x);
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         rb.linearVelocity = new Vector3(
             moveInput.x * speed,
             rb.linearVelocity.y,
             0f
         );
-
-        AplicarGravedadMejorada();
-    }
-
-    void AplicarGravedadMejorada()
-    {
-        if (rb.linearVelocity.y < 0)
-        {
-            rb.AddForce(Vector3.down * fallMultiplier, ForceMode.Acceleration);
-        }
-
-        if (rb.linearVelocity.y > 0 && !controls.Player.Jump.IsPressed())
-        {
-            rb.AddForce(Vector3.down * lowJumpMultiplier, ForceMode.Acceleration);
-        }
     }
 
     private void OnDrawGizmosSelected()
     {
         if (groundCheck != null)
         {
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(
+                groundCheck.position,
+                groundCheckRadius
+            );
         }
     }
 }
