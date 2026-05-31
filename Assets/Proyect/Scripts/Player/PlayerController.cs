@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [Header("Movimiento")]
     public float speed = 5f;
@@ -15,16 +15,23 @@ public class PlayerMovement : MonoBehaviour
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
 
+    [Header("Inventario")]
+    private Inventory inventory;
+    private ItemPickup currentItem;
+    [SerializeField] private GameObject inventoryPanel;
+
+    private bool inventoryOpen;
+
     private Rigidbody rb;
     private Animator animator;
-    private PlayerControls controls;
+    private PlayerInput controls;
 
     private Vector2 moveInput;
     private bool isGrounded;
 
     private void Awake()
     {
-        controls = new PlayerControls();
+        controls = new PlayerInput();
     }
 
     private void OnEnable()
@@ -41,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        inventory = GetComponent<Inventory>();
     }
 
     private void Update()
@@ -78,6 +86,21 @@ public class PlayerMovement : MonoBehaviour
 
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+
+        //Inventario
+        if (controls.Player.interact.WasPressedThisFrame())
+        {
+            if (currentItem != null)
+            {
+                currentItem.PickUp(inventory);
+            }
+        }
+        if (controls.Player.Inventory.WasPressedThisFrame())
+        {
+            inventoryOpen = !inventoryOpen;
+
+            inventoryPanel.SetActive(inventoryOpen);
+        }
     }
 
     private void FixedUpdate()
@@ -113,6 +136,25 @@ public class PlayerMovement : MonoBehaviour
                 groundCheck.position,
                 groundCheckRadius
             );
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        ItemPickup item = other.GetComponent<ItemPickup>();
+
+        if (item != null)
+        {
+            currentItem = item;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        ItemPickup item = other.GetComponent<ItemPickup>();
+
+        if (item != null && currentItem == item)
+        {
+            currentItem = null;
         }
     }
 }
