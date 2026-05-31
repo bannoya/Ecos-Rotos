@@ -11,6 +11,10 @@ public class PlayerMovement : MonoBehaviour
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
+    [Header("Salto")]
+    public float fallMultiplier = 2.5f;
+    public float lowJumpMultiplier = 2f;
+
     private Rigidbody rb;
     private Animator animator;
     private PlayerControls controls;
@@ -37,8 +41,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-
-        Debug.Log("Animator encontrado en: " + animator.gameObject.name);
     }
 
     private void Update()
@@ -50,13 +52,12 @@ public class PlayerMovement : MonoBehaviour
             groundCheckRadius,
             groundLayer
         );
-        Debug.Log("Grounded: " + isGrounded);
 
         // Animaciones
         animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
         animator.SetBool("IsJumping", !isGrounded);
 
-        // Girar personaje
+        // Girar personaje como lo tenías antes
         if (moveInput.x > 0.1f)
         {
             transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -77,7 +78,6 @@ public class PlayerMovement : MonoBehaviour
 
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-        Debug.Log("MoveInput: " + moveInput.x);
     }
 
     private void FixedUpdate()
@@ -87,6 +87,21 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity.y,
             0f
         );
+
+        AplicarGravedadMejorada();
+    }
+
+    private void AplicarGravedadMejorada()
+    {
+        if (rb.linearVelocity.y < 0)
+        {
+            rb.AddForce(Vector3.down * fallMultiplier, ForceMode.Acceleration);
+        }
+
+        if (rb.linearVelocity.y > 0 && !controls.Player.Jump.IsPressed())
+        {
+            rb.AddForce(Vector3.down * lowJumpMultiplier, ForceMode.Acceleration);
+        }
     }
 
     private void OnDrawGizmosSelected()
