@@ -8,6 +8,7 @@ public class ItemPickup : MonoBehaviour
     {
         inventory.AddItem(item);
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+
     }
 }
