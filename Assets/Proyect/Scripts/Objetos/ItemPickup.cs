@@ -4,11 +4,16 @@ public class ItemPickup : MonoBehaviour
 {
     public Item item;
 
+    private bool pickedUp = false;
+
     public void PickUp(Inventory inventory)
     {
-        inventory.AddItem(item);
+        if (pickedUp) return;
+
+        pickedUp = true;
 
         gameObject.SetActive(false);
 
+        inventory.AddItem(item);
     }
 }
