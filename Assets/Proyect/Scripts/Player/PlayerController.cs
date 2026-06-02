@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
             if (currentItem != null)
             {
                 currentItem.PickUp(inventory);
+                currentItem = null;
             }
         }
         if (controls.Player.Inventory.WasPressedThisFrame())
