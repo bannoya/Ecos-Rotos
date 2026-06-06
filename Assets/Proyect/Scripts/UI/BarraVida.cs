@@ -4,19 +4,16 @@ using UnityEngine.UI;
 public class BarraVida : MonoBehaviour
 {
     public Image rellenoBarraVida;
-    private PlayerController PlayerController;
-    private float VidaMaxima;
+    private PlayerHealth playerHealth;
+  
     void Start()
     {
-        PlayerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        VidaMaxima = 10; // habria que añadir realmente en PlayerController un item de vida, igual
-                         // Segun nuestra idea arranca el PJ con la mitad de la vida
-
+        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
     }
 
   
     void Update()
     {
-      //  rellenoBarraVida.fillAmount = PlayerController.vida/VidaMaxima;
+     rellenoBarraVida.fillAmount = (float)playerHealth.vidaActual/playerHealth.vidaMaxima;
     }
 }

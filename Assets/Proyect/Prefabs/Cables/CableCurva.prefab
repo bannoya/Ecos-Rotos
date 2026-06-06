@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 7563184884236635889}
   - component: {fileID: 3139899566406698495}
   - component: {fileID: 5189309907356425962}
+  - component: {fileID: 7797350781191881806}
   m_Layer: 0
   m_Name: Tramo_Z
   m_TagString: Untagged
@@ -140,7 +141,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -148,6 +149,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &7797350781191881806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7240805316836187853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ef7b4d070f899b4c925f5169b3eeaf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CablePulse
+  emissionColor: {r: 0, g: 1, b: 1, a: 1}
+  pulseSpeed: 2
+  minIntensity: 1
+  maxIntensity: 3
 --- !u!1 &7752037193920420017
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,6 +177,7 @@ GameObject:
   - component: {fileID: 2936743361684903614}
   - component: {fileID: 6895059196669738359}
   - component: {fileID: 7632741524336482460}
+  - component: {fileID: 1695493486931640116}
   m_Layer: 0
   m_Name: Tramo_X
   m_TagString: Untagged
@@ -254,7 +272,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -262,6 +280,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &1695493486931640116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7752037193920420017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ef7b4d070f899b4c925f5169b3eeaf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CablePulse
+  emissionColor: {r: 0, g: 1, b: 1, a: 1}
+  pulseSpeed: 2
+  minIntensity: 1
+  maxIntensity: 3
 --- !u!1 &9201025381657913126
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,6 +308,7 @@ GameObject:
   - component: {fileID: 408593653996855751}
   - component: {fileID: 3350389228880519842}
   - component: {fileID: 9199506253243598873}
+  - component: {fileID: 1399275001953424108}
   m_Layer: 0
   m_Name: Codo
   m_TagString: Untagged
@@ -368,9 +403,25 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1399275001953424108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9201025381657913126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ef7b4d070f899b4c925f5169b3eeaf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CablePulse
+  emissionColor: {r: 0, g: 1, b: 1, a: 1}
+  pulseSpeed: 2
+  minIntensity: 1
+  maxIntensity: 3
