@@ -73,13 +73,22 @@ public class PlayerCrouch : MonoBehaviour
                 Levantarse();
             }
         }
+        if (controls.Player.Crouch.IsPressed())
+        {
+            Debug.Log("AGACHARSE");
+            Agacharse();
+        }
     }
 
     private void Agacharse()
     {
+        Debug.Log("ENTRO A AGACHARSE");
+
         if (isCrouching) return;
 
         isCrouching = true;
+
+        Debug.Log("IS CROUCHING = TRUE");
 
         playerCollider.height = alturaAgachado;
         playerCollider.center = centroAgachado;
@@ -89,6 +98,8 @@ public class PlayerCrouch : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("IsCrouching", true);
+            Debug.Log("IsCrouching enviado al Animator");
+            Debug.Log("Animator Crouch TRUE");
         }
     }
 
@@ -107,6 +118,7 @@ public class PlayerCrouch : MonoBehaviour
         {
             animator.SetBool("IsCrouching", false);
         }
+        Debug.Log("LEVANTARSE");
     }
 
     private bool HayTechoArriba()

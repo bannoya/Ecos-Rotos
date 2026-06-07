@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 moveInput;
     private bool isGrounded;
-
+    private Vector3 originalScale;
     private void Awake()
     {
         controls = new PlayerInput();
@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         inventory = GetComponent<Inventory>();
+        originalScale = transform.localScale;
     }
 
     private void Update()
@@ -63,20 +64,31 @@ public class PlayerController : MonoBehaviour
 
         // Animaciones
         animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
+        animator.SetFloat(
+            "VerticalVelocity",
+            rb.linearVelocity.y
+         );
+        animator.SetFloat("VerticalVelocity", rb.linearVelocity.y);
         animator.SetBool("IsJumping", !isGrounded);
+        animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
 
         // Girar personaje como lo tenías antes
+
         if (moveInput.x > 0.1f)
         {
             transform.rotation = Quaternion.Euler(0, 90, 0);
         }
         else if (moveInput.x < -0.1f)
         {
-            transform.rotation = Quaternion.Euler(0, -90, 0);
+            transform.rotation = Quaternion.Euler(0, 270, 0);
         }
 
         // Salto
-        if (controls.Player.Jump.WasPressedThisFrame() && isGrounded)
+        if (
+        controls.Player.Jump.WasPressedThisFrame()
+        && isGrounded
+        && !animator.GetBool("IsCrouching")
+        )
         {
             rb.linearVelocity = new Vector3(
                 rb.linearVelocity.x,
