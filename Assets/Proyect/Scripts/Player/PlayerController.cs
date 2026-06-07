@@ -20,6 +20,13 @@ public class PlayerController : MonoBehaviour
     private ItemPickup currentItem;
     [SerializeField] private GameObject inventoryPanel;
 
+    [Header("WallGrab")]
+    private WallGrab wallGrab;
+    public bool IsGrounded => isGrounded;
+    public float MoveX => moveInput.x;
+    public bool JumpPressed => controls.Player.Jump.WasPressedThisFrame();
+    
+
     private bool inventoryOpen;
 
     private Rigidbody rb;
@@ -50,6 +57,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         inventory = GetComponent<Inventory>();
         originalScale = transform.localScale;
+        wallGrab = GetComponent<WallGrab>();
     }
 
     private void Update()
@@ -72,7 +80,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsJumping", !isGrounded);
         animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
 
-        // Girar personaje como lo tenías antes
+        // Girar personaje solo si no está bloqueado por el wall jump
 
         if (moveInput.x > 0.1f)
         {
@@ -118,6 +126,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (wallGrab != null && wallGrab.IsGrabbing)
+        {
+            return;
+        }
+
         rb.linearVelocity = new Vector3(
             moveInput.x * speed,
             rb.linearVelocity.y,
@@ -170,4 +183,6 @@ public class PlayerController : MonoBehaviour
             currentItem = null;
         }
     }
+
+
 }
