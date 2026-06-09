@@ -69,7 +69,6 @@ public class PlayerController : MonoBehaviour
             groundCheckRadius,
             groundLayer
         );
-
         // Animaciones
         animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
         animator.SetFloat(
@@ -77,7 +76,8 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity.y
          );
         animator.SetFloat("VerticalVelocity", rb.linearVelocity.y);
-        animator.SetBool("IsJumping", !isGrounded);
+        bool realmenteSaltando = !isGrounded && rb.linearVelocity.y > 0.1f;
+        animator.SetBool("IsJumping", realmenteSaltando);
         animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
 
         // Girar personaje solo si no está bloqueado por el wall jump
