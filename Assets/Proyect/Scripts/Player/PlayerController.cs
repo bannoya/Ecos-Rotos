@@ -25,7 +25,14 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded => isGrounded;
     public float MoveX => moveInput.x;
     public bool JumpPressed => controls.Player.Jump.WasPressedThisFrame();
-    
+
+    [Header("Suelo móvil")]
+    public float sueloMovilCheckDistance = 0.6f;
+    public float maxVelocidadAcompanharSuelo = 4f;
+
+    private Transform sueloActual;
+    private Vector3 ultimaPosicionSuelo;
+    private bool tieneSueloMovil;
 
     private bool inventoryOpen;
 
@@ -126,6 +133,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+        DetectarSueloMovil();
+        AcompanharSueloMovil();
+
         if (wallGrab != null && wallGrab.IsGrabbing)
         {
             return;
@@ -142,6 +153,8 @@ public class PlayerController : MonoBehaviour
 
     private void AplicarGravedadMejorada()
     {
+        if (isGrounded) return;
+
         if (rb.linearVelocity.y < 0)
         {
             rb.AddForce(Vector3.down * fallMultiplier, ForceMode.Acceleration);
@@ -184,5 +197,63 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void DetectarSueloMovil()
+    {
+        RaycastHit hit;
+
+        bool detectoSuelo = Physics.Raycast(
+            groundCheck.position + Vector3.up * 0.1f,
+            Vector3.down,
+            out hit,
+            sueloMovilCheckDistance,
+            groundLayer
+        );
+
+        if (detectoSuelo && isGrounded)
+        {
+            Transform nuevoSuelo = hit.transform;
+
+            if (sueloActual != nuevoSuelo)
+            {
+                sueloActual = nuevoSuelo;
+                ultimaPosicionSuelo = sueloActual.position;
+            }
+
+            tieneSueloMovil = true;
+        }
+        else
+        {
+            sueloActual = null;
+            tieneSueloMovil = false;
+        }
+    }
+
+    private void AcompanharSueloMovil()
+    {
+        if (!tieneSueloMovil || sueloActual == null) return;
+
+        Vector3 movimientoSuelo = sueloActual.position - ultimaPosicionSuelo;
+
+        float maxMovimiento = maxVelocidadAcompanharSuelo * Time.fixedDeltaTime;
+
+        movimientoSuelo.x = Mathf.Clamp(
+            movimientoSuelo.x,
+            -maxMovimiento,
+            maxMovimiento
+        );
+
+        movimientoSuelo.y = Mathf.Clamp(
+            movimientoSuelo.y,
+            -maxMovimiento,
+            maxMovimiento
+        );
+
+        // Como tu juego es 2.5D / plataformas, no dejamos que lo arrastre en Z
+        movimientoSuelo.z = 0f;
+
+        rb.MovePosition(rb.position + movimientoSuelo);
+
+        ultimaPosicionSuelo = sueloActual.position;
+    }
 
 }
