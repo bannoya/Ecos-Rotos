@@ -3883,11 +3883,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a0b6046db5405fa49b6b4a1e188d74bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 231.84
+      value: 38.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a0b6046db5405fa49b6b4a1e188d74bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 23.86
+      value: 23.22
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a0b6046db5405fa49b6b4a1e188d74bf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5004,13 +5004,15 @@ MonoBehaviour:
   speed: 5
   jumpForce: 7
   groundCheck: {fileID: 1801079919}
-  groundCheckRadius: 0.2
+  groundCheckRadius: 0.25
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
   fallMultiplier: 9
   lowJumpMultiplier: 0
   inventoryPanel: {fileID: 718651784}
+  sueloMovilCheckDistance: 0.6
+  maxVelocidadAcompanharSuelo: 3
 --- !u!4 &458767274 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a0b6046db5405fa49b6b4a1e188d74bf, type: 3}
@@ -5042,7 +5044,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 120
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &458767278
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5477,6 +5479,7 @@ GameObject:
   - component: {fileID: 499373864}
   - component: {fileID: 499373863}
   - component: {fileID: 499373862}
+  - component: {fileID: 499373866}
   m_Layer: 3
   m_Name: Mini Plataforma 00
   m_TagString: Untagged
@@ -5493,7 +5496,7 @@ Transform:
   m_GameObject: {fileID: 499373860}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -27.76, y: 22.16, z: 0}
+  m_LocalPosition: {x: -27.04, y: 22.16, z: 0}
   m_LocalScale: {x: 3.6568968, y: 0.08988835, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5593,6 +5596,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499373860}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &499373866
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499373860}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &501101564
 GameObject:
   m_ObjectHideFlags: 0
@@ -18058,6 +18088,7 @@ GameObject:
   - component: {fileID: 1946984194}
   - component: {fileID: 1946984193}
   - component: {fileID: 1946984192}
+  - component: {fileID: 1946984195}
   m_Layer: 0
   m_Name: Plataforma
   m_TagString: Untagged
@@ -18158,6 +18189,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1946984190}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &1946984195
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946984190}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1 &1974097797
 GameObject:
   m_ObjectHideFlags: 0
@@ -19604,9 +19662,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &2081480071
 GameObject:
   m_ObjectHideFlags: 0

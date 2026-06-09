@@ -4,16 +4,22 @@ public class PlataformaHorizontal : MonoBehaviour
 {
     public float distancia = 5f;
     public float velocidad = 2f;
-
     public bool empiezaDerecha = true;
+
+    private Rigidbody rb;
 
     private Vector3 posicionInicial;
     private Vector3 posicionFinal;
     private Vector3 objetivo;
 
-    void Start()
+    private void Awake()
     {
-        posicionInicial = transform.position;
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        posicionInicial = rb.position;
 
         if (empiezaDerecha)
         {
@@ -27,15 +33,17 @@ public class PlataformaHorizontal : MonoBehaviour
         objetivo = posicionFinal;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(
-            transform.position,
+        Vector3 nuevaPosicion = Vector3.MoveTowards(
+            rb.position,
             objetivo,
-            velocidad * Time.deltaTime
+            velocidad * Time.fixedDeltaTime
         );
 
-        if (Vector3.Distance(transform.position, objetivo) < 0.01f)
+        rb.MovePosition(nuevaPosicion);
+
+        if (Vector3.Distance(rb.position, objetivo) < 0.01f)
         {
             if (objetivo == posicionFinal)
             {
