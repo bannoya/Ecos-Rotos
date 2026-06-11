@@ -15,6 +15,10 @@ public class PlayerHealth : MonoBehaviour
 
     public EstadoJugador estadoActual;
 
+    [Header("Referencias")]
+    public GameManager gameManager;
+    private bool gameOverMostrado = false;
+
     void Start()
     {
         vidaActual = vidaMaxima/2;
@@ -44,6 +48,16 @@ public class PlayerHealth : MonoBehaviour
         if (vidaActual <= 0)
         {
             estadoActual = EstadoJugador.Muerto;
+
+            if (!gameOverMostrado)
+            {
+                gameOverMostrado = true;
+                if (gameManager != null)
+                {
+                    gameManager.MostrarGameOver();
+                }
+            }
+
         }
         else if (porcentaje <= 0.25f)
         {
