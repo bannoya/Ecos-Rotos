@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,7 +14,7 @@ public class Dialogue : MonoBehaviour
     private int lineIndex;
     private void Update()
     {
-        if (isPlayerInRange && Input.GetButtonDown("Fire1"))
+        if (isPlayerInRange && Keyboard.current.fKey.wasPressedThisFrame)
         {
             if (!didDialogueStart)
             {
